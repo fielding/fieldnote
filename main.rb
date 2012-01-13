@@ -20,7 +20,7 @@ end
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
-use OmniAuth::Strategies::Twitter, :twitter_consumer_key, :twitter_consumer_secret
+use OmniAuth::Strategies::Twitter, settings.twitter_consumer_key, settings.twitter_consumer_secret
 
 
 set :static, true
@@ -41,11 +41,11 @@ get '/' do
     haml :index, :format => :html5
 end
 
-get '/auth/:name/callback' do
+get '/auth/:provider/callback' do
   auth = request.env["omniauth.auth"]
   user = User.first_or_create({ :uid => auth["uid"]}, {
     :uid => auth["uid"],
-   # :nickame => auth["info"]["nickname"],
+  #  :nickame => auth["user_info"]["nickname"],
     :name => auth["user_info"]["name"],
     :created_at => Time.now })
   session[:user_id] = user.id
