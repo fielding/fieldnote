@@ -1,53 +1,459 @@
 @charset "UTF-8";
 
 body {
-	background: #FCF9E9;
-	font-size: 14pt;
-	margin: 20pt;
-	color: #555;
-	width: 600px;
-	margin: 0 auto;
-	}
+  background: #FAFAFA;
+  font-size: 14pt;
+  margin: 20pt;
+  color: #555;
+  margin: 0 auto;
+}
 
 i {
-	color: #9477C9; 
-	font-style:normal; 
-	font-weight: bold;
-	}
+  color: #9477C9; 
+  font-style:normal; 
+  font-weight: bold;
+}
 
 a  {
-	color: #000;
-	font-weight: bold;
-	}
+  color: #000;
+  font-weight: bold;
+}
 
 h1 {
-	font-size: 22pt; 
-	color: #000; 
-	margin-bottom: -20px; 
-	padding-top: 20px;
-	}
+  font-size: 22pt; 
+  color: #000; 
+  margin-bottom: -20px; 
+  padding-top: 20px;
+}
 
 h2 {
-	font-size: 20pt;
-	color: #9477C9;
+  font-size: 20pt;
+  color: #9477C9;
 }
 
 h3 {
-	font-size: 18pt;
-	color: #333;
-	font-weight: normal;
-	margin-bottom: -10px;
+  font-size: 18pt;
+  color: #333;
+  font-weight: normal;
+  margin-bottom: -10px;
 }
 
 p  {
-	text-align: justify; 
-	line-height: 33px;
+  text-align: justify; 
+  line-height: 33px;
+}
+
+pre, code {
+  font: 12px 'Bitstream Vera Sans Mono', 'Courier', monospace
 }
 
 #logo {
-	float: left;
-	margin-left: 24px;
-	margin-right: 24px;
-}		
+  float: left;
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+#thinwrap {
+  width: 600px;
+}
 
 
+/* From githubs production gollum css highlighting section */
+
+/* @section comments */
+
+#wiki-wrapper #template blockquote {
+  margin: 1em 0;
+  border-left: 4px solid #ddd;
+  padding-left: .8em;
+  color: #555;
+}
+
+#wiki-wrapper {
+  margin: 0 auto;
+  overflow: visible;
+  width: 80%;
+}
+
+#wiki-wrapper.error {
+  height: 1px;
+  position: absolute;
+  overflow: visible;
+  top: 50%;
+  width: 100%;
+}
+
+#wiki-content {
+  height: 1%;
+  overflow: visible;
+}
+
+#wiki-content .wrap {
+  height: 1%;
+  overflow: auto;
+}
+
+/* @section comments */
+#wiki-body #inline-comment {
+  display: none; /* todo */
+}
+
+/* @section body */
+#wiki-body {
+  display: block;
+  float: left;
+  margin-right: 3%;
+  width: 100%;
+}
+
+
+#template {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 40px;
+}
+
+/* Link Colors */
+a.absent {
+  color: #c00;
+}
+
+/* Primary Body Copy */
+#template p {
+  margin: 1em 0;
+  padding: 0;
+}
+
+/* ReST first graf in nested list */
+#template * li p.first {
+  display: inline-block;
+}
+
+/* Headings */
+#template h1, #template h2, #template h3, 
+#template h4, #template h5, #template h6 {
+  margin: 0;
+  padding: 0;
+}
+
+#template h1 {
+  border-bottom: 1px solid #ccc;
+  font-size: 33px; /* was 32, GH is 33px */
+  line-height: normal;
+  padding: .08em 0 0 0;
+  margin: 0;
+}
+
+#template h2 {
+  font-size: 22px;
+  line-height: normal;
+  margin: 22px 0 0;
+  padding: 7px 0 0;
+}
+
+#template h3 {
+  font-size: 16px;
+  line-height: 26px;
+  padding: 26px 0 0;
+}
+
+#template h4 {
+  font-size: 14px;
+  line-height: 26px;
+  padding: 18px 0 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#template h5 {
+  font-size: 13px;
+  line-height: 26px;
+  margin-bottom: -19px;
+  padding: 14px 0 0;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#template h6 {
+  color: #666;
+  font-size: 14px; 
+  line-height: 26px;
+  margin-bottom: -19px;
+  padding: 18px 0 0;
+  font-weight: normal;
+  font-variant: italic;
+}
+
+#template hr {
+  background-color: #ccc;
+  color: #ccc;
+  border: 2px solid #ccc;
+  margin: 20px 0;
+  padding: 0;
+}
+
+/* Border Reset for headers with horizontal rules */ 
+#template > h2:first-child, 
+#template > h1:first-child {
+  margin: 12px 0 0;
+  padding: 10px 0 0;
+}
+
+
+/* Lists, Blockquotes & Such */
+#template ul, 
+#template ol {
+  margin-top: 1.5em;
+  margin-left: 2.6em;
+}
+
+/* Nested Lists */
+#template ul li, 
+#template ol li, 
+#template ul li ul, 
+#template ol li ol,
+#template ul li ol,
+#template ol li ul,
+#template ul ul, 
+#template ol ol {
+  padding: 0;
+  margin: .5em 0;
+}
+
+#template dl {
+  margin: 0;
+  padding: 20px 0 0;
+}
+
+#template dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: normal;
+  margin: 0;
+  padding: 20px 0 0;
+}
+
+#template dl dt:first-child {
+  padding: 0;
+}
+
+#template dl dd {
+  font-size: 13px;
+  margin: 0;
+  padding: 3px 0 0;
+}
+
+/* Tables */
+#template table {
+  border-collapse: collapse;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+#template table * tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+#template table * tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+#template table * tr th,
+#template table * tr td {
+  border: 1px solid #ccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px; 
+}
+
+/* Images & Stuff */
+#template img {
+  max-width: 100%;
+}
+
+/* Gollum Image Tags */
+
+/* Framed */
+#template span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+#template span.frame > span {
+  border: 1px solid #ddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+#template span.frame span img {
+  display: block;
+  float: left;
+}
+
+#template span.frame span span {
+  clear: both;
+  color: #333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+#template span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+#template span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+#template span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#template span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+#template span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+#template span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+#template span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+#template span.float-left span {
+  margin: 13px 0 0;
+}
+
+#template span.float-right {
+  display: block; 
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+#template span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+
+/* Code */
+#template code, #template tt {
+  background-color: #f8f8f8;
+  border: 1px solid #dedede;
+  font-size: 13px;
+  padding: 0;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#template .highlight pre, #template pre {
+  backg
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+
+#template pre code, #template pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+#template .highlight { background:#fff; }
+#template .highlight .c { color:#998;font-style:italic; }
+#template .highlight .err { color:#a61717;background-color:#e3d2d2; }
+#template .highlight .k { font-weight:bold; }
+#template .highlight .o { font-weight:bold; }
+#template .highlight .cm { color:#998;font-style:italic; }
+#template .highlight .cp { color:#999;font-weight:bold; }
+#template .highlight .c1 { color:#998;font-style:italic; }
+#template .highlight .cs { color:#999;font-weight:bold;font-style:italic; }
+#template .highlight .gd { color:#000;background-color:#fdd; }
+#template .highlight .gd .x { color:#000;background-color:#faa; }
+#template .highlight .ge { font-style:italic; }
+#template .highlight .gr { color:#a00; }
+#template .highlight .gh { color:#999; }
+#template .highlight .gi { color:#000;background-color:#dfd; }
+#template .highlight .gi .x { color:#000;background-color:#afa; }
+#template .highlight .go { color:#FFF;background-color:#333; width: 100%;display:inline-block; }
+#template .highlight .gp { color:#555; }
+#template .highlight .gs { font-weight:bold; }
+#template .highlight .gu { color:#800080;font-weight:bold; }
+#template .highlight .gt { color:#a00; }
+#template .highlight .kc { font-weight:bold; }
+#template .highlight .kd { font-weight:bold; }
+#template .highlight .kp { font-weight:bold; }
+#template .highlight .kr { font-weight:bold; }
+#template .highlight .kt { color:#458;font-weight:bold; }
+#template .highlight .m { color:#099; }
+#template .highlight .s { color:#d14; }
+#template .highlight .na { color:#008080; }
+#template .highlight .nb { color:#0086B3; }
+#template .highlight .nc { color:#458;font-weight:bold; }
+#template .highlight .no { color:#008080; }
+#template .highlight .ni { color:#800080; }
+#template .highlight .ne { color:#900;font-weight:bold; }
+#template .highlight .nf { color:#900;font-weight:bold; }
+#template .highlight .nn { color:#555; }
+#template .highlight .nt { color:#000080; }
+#template .highlight .nv { color:#008080; }
+#template .highlight .ow { font-weight:bold; }
+#template .highlight .w { color:#bbb; }
+#template .highlight .mf { color:#099; }
+#template .highlight .mh { color:#099; }
+#template .highlight .mi { color:#099; }
+#template .highlight .mo { color:#099; }
+#template .highlight .sb { color:#d14; }
+#template .highlight .sc { color:#d14; }
+#template .highlight .sd { color:#d14; }
+#template .highlight .s2 { color:#d14; }
+#template .highlight .se { color:#d14; }
+#template .highlight .sh { color:#d14; }
+#template .highlight .si { color:#d14; }
+#template .highlight .sx { color:#d14; }
+#template .highlight .sr { color:#009926; }
+#template .highlight .s1 { color:#d14; }
+#template .highlight .ss { color:#990073; }
+#template .highlight .bp { color:#999; }
+#template .highlight .vc { color:#008080; }
+#template .highlight .vg { color:#008080; }
+#template .highlight .vi { color:#008080; }
+#template .highlight .il { color:#099; }

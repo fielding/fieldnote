@@ -1,5 +1,7 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./lib/credentials.rb).each { |dependency| require dependency }
+%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./lib/credentials.rb log4r).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
+
+RubyPython.configure :python_exe => 'python2.7'
 
 use Rack::Session::Cookie
 
@@ -22,7 +24,6 @@ DataMapper.auto_upgrade!
 
 use OmniAuth::Strategies::Twitter, settings.twitter_consumer_key, settings.twitter_consumer_secret
 
-
 set :static, true
 set :views, 'view'
 set :public_directory, 'pub'
@@ -30,6 +31,15 @@ set :site_name, 'justFielding'
 set :site_description, 'HONKY DO THA jiveJerky!'
 set :author, 'Fielding'
 set :notes_path, '/home/fielding/git/notes.git'
+
+logger = Log4r::Logger.new('test')
+logger.outputters << Log4r::Outputter.stdout
+logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/logtest.log')
+logger.info('eat a pp')
+
+logger = Log4r::Logger['test']
+logger.info('big ol pp')
+puts 'lick a hoo haa'
 
 helpers do
   def current_user
@@ -80,7 +90,7 @@ end
 
 get '/noauth' do
   if !current_user
-    haml :noauth
+    haml :noauth, :format => :html5
   else
     redirect '/'
   end
@@ -88,19 +98,28 @@ end
 
 get '/debug' do
   if current_user
-    haml :debug
+    haml :debug, :format => :html5
   else
     redirect '/noauth'
   end
 end
 
-#get '/*' do
-#  if current_user
-#    wiki = Gollum::Wiki.new(settings.notes_path)
-#    if params[:splat].first
-#    end
-#  else
-# redirect '/noauth'
-#  end
-#end
+get '/note/*' do
+  if current_user
+    showcontent(params[:splat].first)
+  else
+ redirect '/noauth'
+  end
+end
 
+
+def showcontent(name)
+  wiki = Gollum::Wiki.new(settings.notes_path)
+  if note = wiki.page(name)
+    @note = note
+    @name = name
+    @content = note.formatted_data
+    @editable = true
+    haml :note, :format => :html5
+  end
+end
