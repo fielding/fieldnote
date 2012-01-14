@@ -48,10 +48,10 @@ pre, code {
 }
 
 .img-other {
-  background: url('/img/9tails.gif') no-repeat 0 0;
+  background: url('/img/ruby48.png') no-repeat 0 0;
   position: relative;
   left: 32px;
-  top: -18px;
+  top: -8px;
   width: 48px;
   height: 48px;
   float: left;
@@ -59,10 +59,10 @@ pre, code {
 
 
 .img-cmd {
-  background: url('/img/promptsm.png') no-repeat 0 0;
+  background: url('/img/prompt48.png') no-repeat 0 0;
   position: relative;
   left: 32px;
-  top: -18px;
+  top: -8px;
   width: 48px;
   height: 48px;
   float: left;
@@ -426,7 +426,7 @@ a.absent {
 
 }
 
-#template .highlight { background:#fff; padding-top: 10px; }
+#template .highlight { background:#f8f8f8; padding-top: 10px; }
 #template .highlight .c { color:#998;font-style:italic; }
 #template .highlight .err { color:#a61717;background-color:#e3d2d2; }
 #template .highlight .k { font-weight:bold; }
