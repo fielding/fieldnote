@@ -8,22 +8,23 @@
     %meta(name="author" content="#{settings.author}")
     %meta(name="rights" content="Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.")
 
-    %link(rel="shortcut icon" href="img/hearticon.png")
-    %link(rel="apple-touch-icon" href="img/swordicon.png")
+    %link(rel="shortcut icon" href="/img/hearticon.png")
+    %link(rel="apple-touch-icon" href="/img/swordicon.png")
 
-    %link(rel="stylesheet" media="screen, projection" href="style/main.css")
+    %link(rel="stylesheet" media="screen, projection" href="/style/main.css")
 
   %body
-    %header
-      %img#logo(src="img/logo.gif" alt="justfielding.com" height="95" width="92")
-      %h1 Notes!
-      %h2 big ol' notes
+    %div#thinwrap
+      %header
+        %img#logo(src="img/logo.gif" alt="justfielding.com" height="95" width="92")
+        %h1 Notes!
+        %h2 big ol' notes
 
-    %content
-      %ul
-        - @index.each do |n|
-          %li
-            %a(href="note/#{n.name}") #{n.name}
+      %content
+        %ul
+          - @index.each do |n|
+            %li
+              %a(href="note/#{n.name}") #{n.name}
 
-    %footer
+      %footer
       %small © Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.

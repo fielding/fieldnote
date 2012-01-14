@@ -32,14 +32,10 @@ set :site_description, 'HONKY DO THA jiveJerky!'
 set :author, 'Fielding'
 set :notes_path, '/home/fielding/git/notes.git'
 
-logger = Log4r::Logger.new('test')
+logger = Log4r::Logger.new('authlog')
 logger.outputters << Log4r::Outputter.stdout
-logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/logtest.log')
-logger.info('eat a pp')
-
-logger = Log4r::Logger['test']
-logger.info('big ol pp')
-puts 'lick a hoo haa'
+logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/authlog.log')
+logger.info('authlog: fieldnote initialized')
 
 helpers do
   def current_user
@@ -59,6 +55,7 @@ get '/auth/:provider/callback' do
     :name => auth["user_info"]["name"],
     :created_at => Time.now })
   session[:user_id] = user.id
+  logger.info("authlog: #{auth["user_info"]["name"]} successfully authorized")
   redirect '/'
 end
 
@@ -70,6 +67,7 @@ end
 
 ["/sign_out/?", "/signout/?", "/log_out/?", "/logout/?"].each do |path|
   get path do
+    logger.info("authlog: #{current_user.name} logging out")
     session[:user_id] = nil
     redirect '/'
   end
@@ -81,6 +79,8 @@ get '/notes' do
     @ref = note_repo.ref
     @index = note_repo.pages
     @index_filename = note_repo.tree_map_for(@ref)
+
+    logger.info("authlog: #{current_user.name} accessed notes")
 
     haml :notes, :format => :html5
   else
