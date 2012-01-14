@@ -1,0 +1,33 @@
+!!! 5
+%html
+  %head
+    %meta(http-equiv="Content-type" content="text/html;charset=utf-8")
+    %title= @title || settings.site_name
+
+    %meta(name="description" content="#{settings.site_description}")
+    %meta(name="author" content="#{settings.author}")
+    %meta(name="rights" content="Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.")
+
+    %link(rel="shortcut icon" href="/img/hearticon.png")
+    %link(rel="apple-touch-icon" href="/img/swordicon.png")
+
+    %link(rel="stylesheet" media="screen, projection" href="/style/main.css")
+
+    %script(type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js")
+    %script(type="text/javascript")$(document).ready(function(){$("span.go").parents('pre').addClass('cmd');$("span.c").parents('pre').addClass('other');$("span.k").parents('pre').addClass('other');$('<ins class="img-cmd"></ins>').insertBefore('.cmd');$('<ins class="img-other"></ins>').insertBefore('.other');});
+
+  %body
+    %header
+    %img#logo(src="/img/logo.gif" alt="justfielding.com" height="95" width="92")
+    %h1 #{@name}
+    %h2 Description or tags will go here
+    %div#wiki-wrapper(class="page")
+      %div#wiki-content
+        %div(class="wrap")
+          %div#wiki-body(class="gollum-markdown-content")
+            %div#template
+              :plain
+                #{@content}
+
+    %footer
+      %small © Copyright #{settings.author} #{Time.now.year}. All Rights Reserved.

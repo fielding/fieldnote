@@ -47,6 +47,27 @@ pre, code {
   font: 12px 'Bitstream Vera Sans Mono', 'Courier', monospace
 }
 
+.img-other {
+  background: url('/img/9tails.gif') no-repeat 0 0;
+  position: relative;
+  left: 32px;
+  top: -18px;
+  width: 48px;
+  height: 48px;
+  float: left;
+}
+
+
+.img-cmd {
+  background: url('/img/promptsm.png') no-repeat 0 0;
+  position: relative;
+  left: 32px;
+  top: -18px;
+  width: 48px;
+  height: 48px;
+  float: left;
+}
+
 #logo {
   float: left;
   margin-left: 24px;
@@ -57,6 +78,7 @@ pre, code {
   width: 600px;
   margin: 0 auto;
 }
+
 
 
 /* From githubs production gollum css highlighting section */
@@ -380,12 +402,12 @@ a.absent {
 }
 
 #template .highlight pre, #template pre {
-  backg
+  background: #f8f8f8;
   border: 1px solid #ccc;
   font-size: 13px;
   line-height: 19px;
   overflow: auto;
-  padding: 6px 10px;
+  padding: 22px 12px 12px 24px;
 
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -398,7 +420,13 @@ a.absent {
   border: none;
 }
 
-#template .highlight { background:#fff; }
+#template .highlight .cmd, .cmd {
+  color: #FFF;
+  background-color: #333;
+
+}
+
+#template .highlight { background:#fff; padding-top: 10px; }
 #template .highlight .c { color:#998;font-style:italic; }
 #template .highlight .err { color:#a61717;background-color:#e3d2d2; }
 #template .highlight .k { font-weight:bold; }
@@ -414,7 +442,7 @@ a.absent {
 #template .highlight .gh { color:#999; }
 #template .highlight .gi { color:#000;background-color:#dfd; }
 #template .highlight .gi .x { color:#000;background-color:#afa; }
-#template .highlight .go { color:#FFF;background-color:#333; width: 100%;display:inline-block; }
+#template .highlight .go { color:#FFF; background-color:#333; }
 #template .highlight .gp { color:#555; }
 #template .highlight .gs { font-weight:bold; }
 #template .highlight .gu { color:#800080;font-weight:bold; }
