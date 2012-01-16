@@ -1,7 +1,9 @@
 %w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./etc/config.rb log4r).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
 
-RubyPython.configure :python_exe => 'python2.7'
+if RUBY_PLATFORM.downcase.include?("linux")
+  RubyPython.configure :python_exe => 'python2.7'
+end
 
 use Rack::Session::Cookie
 
