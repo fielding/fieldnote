@@ -30,7 +30,7 @@ set :static, true
 set :views, 'view'
 set :public_directory, 'pub'
 set :site_name, 'justFielding'
-set :site_description, 'HONKY DO THA jiveJerky!'
+set :site_description, 'HONKY DO THA jiveJerky:!!'
 set :author, 'Fielding'
 set :git_repo, '/home/fielding/git/notes.git'
 
