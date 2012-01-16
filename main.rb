@@ -1,4 +1,4 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./lib/credentials.rb log4r).each { |dependency| require dependency }
+%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./etc/config.rb log4r).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
 
 RubyPython.configure :python_exe => 'python2.7'
@@ -30,7 +30,7 @@ set :public_directory, 'pub'
 set :site_name, 'justFielding'
 set :site_description, 'HONKY DO THA jiveJerky!'
 set :author, 'Fielding'
-set :notes_path, '/home/fielding/git/notes.git'
+set :git_repo, '/home/fielding/git/notes.git'
 
 logger = Log4r::Logger.new('authlog')
 logger.outputters << Log4r::Outputter.stdout
@@ -75,7 +75,7 @@ end
 
 get '/notes' do
   if current_user
-    note_repo = Gollum::Wiki.new(settings.notes_path)
+    note_repo = Gollum::Wiki.new(settings.git_repo)
     @ref = note_repo.ref
     @index = note_repo.pages
     @index_filename = note_repo.tree_map_for(@ref)
@@ -114,7 +114,7 @@ end
 
 
 def showcontent(name)
-  wiki = Gollum::Wiki.new(settings.notes_path)
+  wiki = Gollum::Wiki.new(settings.git_repo)
   if note = wiki.page(name)
     @note = note
     @name = name
