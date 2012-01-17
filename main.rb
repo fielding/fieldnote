@@ -42,6 +42,10 @@ helpers do
   def current_user
     @current_user ||= User.get(session[:user_id]) if session[:user_id]
   end
+
+  def partial(page, variables={})
+    haml page.to_sym, {layout:false}, variables
+  end
 end
 
 get '/' do
