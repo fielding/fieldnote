@@ -11,6 +11,7 @@
           %div.wrap
             %div#wiki-body.gollum-markdown-content
               %div#template
+                %p= @meta[:tag]
                 :plain
                   #{@content}
 

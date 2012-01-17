@@ -46,6 +46,25 @@ helpers do
   def partial(page, variables={})
     haml page.to_sym, {layout:false}, variables
   end
+
+  def showcontent(name)
+    repo = Gollum::Wiki.new(settings.git_repo)
+    if @content = repo.page(name).formatted_data
+      @editable = true
+      haml :note, :format => :html5
+    end
+  end
+
+  def getMeta(object)
+    repo = Gollum::Wiki.new(settings.git_repo)
+    if object = repo.page(object)
+      raw = object.raw_data
+      markup = Gollum::Markup.new(object)
+      markup.extract_code(raw)
+      @meta = Maruku.new(raw).attributes
+    end
+end
+
 end
 
 get '/' do
@@ -81,10 +100,10 @@ end
 get '/notes' do
   if current_user
     note_repo = Gollum::Wiki.new(settings.git_repo)
-    @ref = note_repo.ref
+    ref = note_repo.ref
     @index = note_repo.pages
-    @index_filename = note_repo.tree_map_for(@ref)
-
+    @index_filename = note_repo.tree_map_for(ref)
+   #getAllMeta(objects)
     logger.info("authlog: #{current_user.name} accessed notes")
 
     haml :notes, :format => :html5
@@ -111,20 +130,9 @@ end
 
 get '/note/*' do
   if current_user
+    getMeta(params[:splat].first)
     showcontent(params[:splat].first)
   else
  redirect '/noauth'
-  end
-end
-
-
-def showcontent(name)
-  wiki = Gollum::Wiki.new(settings.git_repo)
-  if note = wiki.page(name)
-    @note = note
-    @name = name
-    @content = note.formatted_data
-    @editable = true
-    haml :note, :format => :html5
   end
 end

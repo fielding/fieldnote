@@ -436,7 +436,7 @@ a.absent {
 }
 
 #template .highlight pre, #template pre {
-  background: #f8f8f8;
+  background: #fff;
   border: 1px solid #ccc;
   font-size: 13px;
   line-height: 19px;
