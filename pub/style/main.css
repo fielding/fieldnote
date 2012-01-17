@@ -8,9 +8,6 @@ body {
   margin: 0 auto;
 }
 
-head {
-}
-
 i {
   color: #9477C9; 
   font-style:normal; 
@@ -71,11 +68,38 @@ pre, code {
   float: left;
 }
 
-#logo {
+#crumbs {
+	margin: 12px 0 0;
+	padding: 10px 0 0;
+	border-bottom: 1px solid #CCC;
+}
+
+#head {
+	width: 398px;
+	margin: 0 auto;
+}
+
+#nav {
+	text-align: center;
+	
+}
+
+#nav a {
+	color: #9477C9;
+	text-decoration: none;
+	font-weight: 100;
+}
+
+#ninetails {
   float: left;
   margin-left: 24px;
   margin-right: 24px;
 }
+
+#logo {
+
+}
+
 
 #thinwrap {
   width: 600px;
@@ -221,8 +245,6 @@ a.absent {
 /* Border Reset for headers with horizontal rules */ 
 #template > h2:first-child, 
 #template > h1:first-child {
-  margin: 12px 0 0;
-  padding: 10px 0 0;
 }
 
 
