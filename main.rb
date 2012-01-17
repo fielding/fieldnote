@@ -32,7 +32,6 @@ set :public_directory, 'pub'
 set :site_name, 'justFielding'
 set :site_description, 'HONKY DO THA jiveJerky:!!'
 set :author, 'Fielding'
-set :git_repo, '/home/fielding/git/notes.git'
 
 logger = Log4r::Logger.new('authlog')
 logger.outputters << Log4r::Outputter.stdout
