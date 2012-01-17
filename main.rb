@@ -129,12 +129,10 @@ get '/debug' do
 end
 
 get '/note/*' do
-  getMeta(params[:splat].first)
   if current_user
-    showcontent(params[:splat].first)
-  elsif @meta.has_value?('Public')
+    getMeta(params[:splat].first)
     showcontent(params[:splat].first)
   else
-    redirect '/noauth'
+ redirect '/noauth'
   end
 end
