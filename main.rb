@@ -1,4 +1,4 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml oa-oauth sinatra sinatra/base ./etc/config.rb log4r).each { |dependency| require dependency }
+%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra sinatra/base ./etc/config.rb log4r).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
 
 if RUBY_PLATFORM.downcase.include?("linux")
