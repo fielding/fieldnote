@@ -49,7 +49,8 @@ helpers do
 
   def showcontent(name)
     repo = Gollum::Wiki.new(settings.git_repo)
-    if @content = repo.page(name).formatted_data
+    object = repo.page(name)
+    if @contenti = object.formatted_data
       @editable = true
       haml :note, :format => :html5
     end
@@ -62,6 +63,7 @@ helpers do
       markup = Gollum::Markup.new(object)
       markup.extract_code(raw)
       @meta = Maruku.new(raw).attributes
+      return @meta
     end
 end
 
@@ -129,10 +131,10 @@ get '/debug' do
 end
 
 get '/note/*' do
-  if current_user
-    getMeta(params[:splat].first)
+  getMeta(params[:splat].first)
+  if current_user || @meta.has_value?('Public')
     showcontent(params[:splat].first)
   else
- redirect '/noauth'
+    redirect '/noauth'
   end
 end
