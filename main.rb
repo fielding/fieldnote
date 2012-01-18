@@ -50,7 +50,7 @@ helpers do
   def showcontent(name)
     repo = Gollum::Wiki.new(settings.git_repo)
     object = repo.page(name)
-    if @contenti = object.formatted_data
+    if @content = object.formatted_data
       @editable = true
       haml :note, :format => :html5
     end
