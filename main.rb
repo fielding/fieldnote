@@ -60,17 +60,24 @@ class FieldNote < Sinatra::Base
       end
     end
 
+    def navLogInOut # return array named 
+      if current_user
+        route, display = '/logout', 'logout'
+      else
+        route, display = '/login', 'login'
+      end
+    partial :_navLogInOut, :locals => {:route => route, :display => display}
+    end
+
     def getMeta(object)
       repo = Gollum::Wiki.new(settings.git_repo)
       if object = repo.page(object)
         raw = object.raw_data
         markup = Gollum::Markup.new(object)
         markup.extract_code(raw)
-        @meta = Maruku.new(raw).attributes
-        return @meta
+        meta = Maruku.new(raw).attributes
       end
     end
-
   end
 
   get '/' do
@@ -136,11 +143,12 @@ class FieldNote < Sinatra::Base
 
   get '/note/*' do
     meta = getMeta(params[:splat].first)
-    if current_user || meta['Publish'] == "Read"
+    if current_user || meta[:publish] == 'Read'
       showcontent(params[:splat].first)
     else
       redirect '/noauth'
     end
   end
 end
+
 
