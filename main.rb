@@ -23,12 +23,6 @@ end
 DataMapper.finalize
 DataMapper.auto_upgrade!
 
-
-logger = Log4r::Logger.new('authlog')
-logger.outputters << Log4r::Outputter.stdout
-logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/authlog.log')
-logger.info('authlog: fieldnote initialized')
-
 class FieldNote < Sinatra::Base
 
   require_relative 'etc/config'
@@ -42,6 +36,11 @@ class FieldNote < Sinatra::Base
 
   use OmniAuth::Strategies::Twitter, settings.twitter_consumer_key, settings.twitter_consumer_secret
 
+  logger = Log4r::Logger.new('authlog')
+  logger.outputters << Log4r::Outputter.stdout
+  logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/authlog.log')
+  logger.info('authlog: fieldnote initialized')
+
   helpers do
     def current_user
       @current_user ||= User.get(session[:user_id]) if session[:user_id]
@@ -49,6 +48,23 @@ class FieldNote < Sinatra::Base
 
     def partial(page, variables={})
       haml page.to_sym, {layout:false}, variables
+    end
+
+    def accessControl(fieldMatter)
+      logger = Log4r::Logger['authlog']
+      if fieldMatter[:publish] == 'Read'
+        logger.info("Unknown[#{request.ip} accessed #{fieldMatter[:title]}")
+        return true
+      elsif current_user && current_user.id == 1
+        logger.info("#{current_user.name} accessed #{fieldMatter[:title]} as root user")
+        return true
+      elsif fieldMatter[:publish] != 'Read' && current_user
+        logger.warn("#{current_user.name} attempted to access #{fieldMatter[:title]}")
+        return false
+      else
+        logger.warn("Unknown[#{request.ip}] tried to access #{fieldMatter[:title]}")
+        return false
+      end
     end
 
     def showcontent(name, fieldMatter={})
@@ -81,6 +97,7 @@ class FieldNote < Sinatra::Base
   end
 
   get '/' do
+    logger.info("Somebody[#{request.ip}] accessed the front page.")
     haml :index, :format => :html5
   end
 
@@ -93,7 +110,7 @@ class FieldNote < Sinatra::Base
       :name => auth["user_info"]["name"],
       :created_at => Time.now })
       session[:user_id] = user.id
-      logger.info("authlog: #{auth["user_info"]["name"]} successfully authorized")
+      logger.info("#{auth["user_info"]["name"]} successfully authorized from #{request.ip}")
       redirect '/'
   end
 
@@ -105,7 +122,7 @@ class FieldNote < Sinatra::Base
 
   ["/sign_out/?", "/signout/?", "/log_out/?", "/logout/?"].each do |path|
     get path do
-      logger.info("authlog: #{current_user.name} logging out")
+      logger.info("#{current_user.name} logged out")
       session[:user_id] = nil
       redirect '/'
     end
@@ -122,31 +139,41 @@ class FieldNote < Sinatra::Base
 ### End Auth Methods
   
   get '/about' do
-
+    logger.info("Somebody[#{request.ip}] attempted to access /about. Perhaps you should finish it.")
+    "Somebody was actually interested in reading the about section? Check back later!"
   end
 
   get '/blog' do
-  
+    logger.info("Somebody[#{request.ip}] attempted to access /blog. Perhaps you should finish it.")
+    "Hello there! I\'ve yet to implement the super sweet blog system. Check back later!"
   end
   
-  get '/notes' do
+  get '/notes' do                                                                # Super ugly, really need to refactor/reclear/rethink
     if current_user
-      note_repo = Gollum::Wiki.new(settings.git_repo)
-      ref = note_repo.ref
-      @index = note_repo.pages
-      @index_filename = note_repo.tree_map_for(ref)
-      #getAllMeta(objects)
-      logger.info("authlog: #{current_user.name} accessed notes")
+      if current_user.id == 1
+        note_repo = Gollum::Wiki.new(settings.git_repo)
+        ref = note_repo.ref
+        @index = note_repo.pages
+        @index_filename = note_repo.tree_map_for(ref)
 
-      haml :notes, :format => :html5
+        #getAllMeta(objects)
+
+        logger.info("#{current_user.name} accessed note index")
+
+        haml :notes, :format => :html5
+      else
+        logger.warn("#{current_user.name} attempted to access note")
+        "Sorry, #{current_user.name} you do not have access to my notes"
+      end
     else
+      logger.warn("Unknown[#{request.ip}] attempted to access note index")
       redirect '/noauth'
     end
   end
 
-  get '/note/*' do
+  get '/note/*' do                                                               # Mostly happy with this
     fieldMatter = getMatter(params[:splat].first)
-    if current_user || fieldMatter[:publish] == 'Read'
+    if accessControl(fieldMatter)
       showcontent(params[:splat].first, fieldMatter)
     else
       redirect '/noauth'
@@ -155,8 +182,10 @@ class FieldNote < Sinatra::Base
 
   get '/debug' do
     if current_user
+      logger.info("#{current_user.name} accessed deug")
       haml :debug, :format => :html5
     else
+      logger.warn("Unknown[#{request.ip}] attempted to access debug")
       redirect '/noauth'
     end
   end
