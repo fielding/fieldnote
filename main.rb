@@ -54,9 +54,9 @@ class FieldNote < Sinatra::Base
     def showcontent(name, fieldMatter={})
       repo = Gollum::Wiki.new(settings.git_repo)
       object = repo.page(name)
-      if @content = object.formatted_data
+      if content = object.formatted_data
         @editable = true
-          haml :note, :locals => {:fMatter => fieldMatter}
+          haml :note, :locals => {:fMatter => fieldMatter, :content => content}
         end
     end
 
