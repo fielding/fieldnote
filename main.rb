@@ -51,16 +51,16 @@ class FieldNote < Sinatra::Base
       haml page.to_sym, {layout:false}, variables
     end
 
-    def showcontent(name)
+    def showcontent(name, fieldMatter={})
       repo = Gollum::Wiki.new(settings.git_repo)
       object = repo.page(name)
       if @content = object.formatted_data
         @editable = true
-        haml :note, :format => :html5
-      end
+          haml :note, :locals => {:fMatter => fieldMatter}
+        end
     end
 
-    def navLogInOut # return array named 
+    def navLogInOut # render partial for login/logout nav menu link
       if current_user
         route, display = '/logout', 'logout'
       else
@@ -69,13 +69,13 @@ class FieldNote < Sinatra::Base
     partial :_navLogInOut, :locals => {:route => route, :display => display}
     end
 
-    def getMeta(object)
+    def getMatter(object)
       repo = Gollum::Wiki.new(settings.git_repo)
       if object = repo.page(object)
         raw = object.raw_data
         markup = Gollum::Markup.new(object)
         markup.extract_code(raw)
-        meta = Maruku.new(raw).attributes
+        fieldMatter = Maruku.new(raw).attributes
       end
     end
   end
@@ -142,13 +142,11 @@ class FieldNote < Sinatra::Base
   end
 
   get '/note/*' do
-    meta = getMeta(params[:splat].first)
-    if current_user || meta[:publish] == 'Read'
-      showcontent(params[:splat].first)
+    fieldMatter = getMatter(params[:splat].first)
+    if current_user || fieldMatter[:publish] == 'Read'
+      showcontent(params[:splat].first, fieldMatter)
     else
       redirect '/noauth'
     end
   end
 end
-
-

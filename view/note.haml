@@ -5,13 +5,12 @@
     %div#wiki-wrapper.page
       %header
         = partial :_header
-        = partial :_crumbs
+        = partial :_crumbs, :locals => {:fMatter => locals[:fMatter]}
       %content
         %div#wiki-content
           %div.wrap
             %div#wiki-body.gollum-markdown-content
               %div#template
-                %p= @meta[:tag]
                 :plain
                   #{@content}
 
