@@ -2,14 +2,15 @@
 %html
   %head= partial :_head
   %body
-    %header= partial :_header
-    %content
-      %h1 Debug
-      %h2 Yeah buddy!
-      %ul
-        %li Current User: #{current_user.name}
-        %li Local UserID: #{current_user.id}
-        %li UID: #{current_user.uid}
-        %li Session Created: #{current_user.created_at}
+    %div#thinwrap.center
+      %header= partial :_header
+      %content
+        %h1 Debug
+        %h2 Yeah buddy!
+        %ul
+          %li Current User: #{current_user.name}
+          %li Local UserID: #{current_user.id}
+          %li UID: #{current_user.uid}
+          %li Session Created: #{current_user.created_at}
 
-    %footer= partial :_footer
+      %footer= partial :_footer
