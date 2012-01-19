@@ -1,5 +1,4 @@
-require 'rubygems'
-require 'sinatra'
-require './main.rb'
+root = ::File.dirname(__FILE__)
+require ::File.join( root, 'main' )
 
-run Sinatra::Application
+run FieldNote
