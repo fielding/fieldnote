@@ -84,6 +84,7 @@ class FieldNote < Sinatra::Base
     haml :index, :format => :html5
   end
 
+### Auth Methods 
   get '/auth/:provider/callback' do
     auth = request.env["omniauth.auth"]
     user = User.first_or_create({ :uid => auth["uid"]}, {
@@ -110,6 +111,24 @@ class FieldNote < Sinatra::Base
     end
   end
 
+  get '/noauth' do
+    if !current_user
+      haml :noauth, :format => :html5
+    else
+      redirect '/'
+    end
+  end
+
+### End Auth Methods
+  
+  get '/about' do
+
+  end
+
+  get '/blog' do
+  
+  end
+  
   get '/notes' do
     if current_user
       note_repo = Gollum::Wiki.new(settings.git_repo)
@@ -125,26 +144,18 @@ class FieldNote < Sinatra::Base
     end
   end
 
-  get '/noauth' do
-    if !current_user
-      haml :noauth, :format => :html5
+  get '/note/*' do
+    fieldMatter = getMatter(params[:splat].first)
+    if current_user || fieldMatter[:publish] == 'Read'
+      showcontent(params[:splat].first, fieldMatter)
     else
-      redirect '/'
+      redirect '/noauth'
     end
   end
 
   get '/debug' do
     if current_user
       haml :debug, :format => :html5
-    else
-      redirect '/noauth'
-    end
-  end
-
-  get '/note/*' do
-    fieldMatter = getMatter(params[:splat].first)
-    if current_user || fieldMatter[:publish] == 'Read'
-      showcontent(params[:splat].first, fieldMatter)
     else
       redirect '/noauth'
     end
