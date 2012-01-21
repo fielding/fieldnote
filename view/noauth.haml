@@ -2,9 +2,9 @@
 %html
   %head= partial :_head
   %body
-    %div#thinwrap.center
-      %header= partial :_header
-      %content
+    %header= partial :_header
+    %content
+      %div#wrapper.thincenter
         %h1 Denied! Authorization Required!
         %h2 Warning! The System Intruded!!!
-      %footer= partial :_footer
+    %footer= partial :_footer

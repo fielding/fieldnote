@@ -2,9 +2,9 @@
 %html
   %head= partial :_head
   %body
-    %div#thinwrap.center
-      %header= partial :_header
-      %content
+    %header= partial :_header
+    %content
+      %div#wrapper.thincenter
         %h1 Debug
         %h2 Yeah buddy!
         %ul
@@ -13,4 +13,4 @@
           %li UID: #{current_user.uid}
           %li Session Created: #{current_user.created_at}
 
-      %footer= partial :_footer
+    %footer= partial :_footer

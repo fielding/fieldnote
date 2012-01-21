@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-  background: #FAFAFA;
+  background: #F2F2F2;
   font-size: 14pt;
   margin: 20pt;
   color: #555;
@@ -15,7 +15,7 @@ i {
 }
 
 a  {
-  color: #000;
+  color: #333;
   font-weight: bold;
 }
 
@@ -27,7 +27,7 @@ em {
 
 h1 {
   font-size: 22pt; 
-  color: #000; 
+  color: #333; 
   margin-bottom: -20px; 
   padding-top: 20px;
 }
@@ -76,7 +76,7 @@ pre, code {
 
 #about {
   float: left;
-  width: 500px;
+  width: 540px;
 }
 
 #about h3 {
@@ -91,7 +91,8 @@ pre, code {
 
 #aboutinfo {
   float: right;
-  width: 400px;
+  width: 380px;
+  margin: 0px 10px;
 }
 
 #aboutinfo h3 {
@@ -100,19 +101,25 @@ pre, code {
 }
 
 #crumbs {
-	margin: 12px 0 0;
+	margin: 12px 10px 0;
 	padding: 10px 0 0;
 	border-bottom: 1px solid #CCC;
 }
 
 #footer {
-  margin: auto;
-  width: 960px;
+  margin: 0px auto;
+  width: 940px;
   text-align: center;
 }
 
+#flickr {
+  float: left;
+  width: 340px;
+  margin: 0px 10px;
+}
+
 #head {
-	width: 398px;
+	width: 400px;
 	margin: 0 auto 20px;
 	padding-bottom: 20px;
 }
@@ -120,7 +127,8 @@ pre, code {
 #nav {
 	text-align: center;
 	top: 0px;
-	margin: -20px;
+	margin: -20px 0px;
+  width: 400px;
 }
 
 #nav a {
@@ -136,8 +144,18 @@ pre, code {
 }
 
 #logo {
-	width: 398px;
+	width: 400px;
 	height: 182px;
+}
+
+#posts {
+  width: 700px;
+  margin: 0px 10px;
+  float: left;
+}
+
+#posts h3 {
+  font-size: 16pt;
 }
 
 #ribbon {
@@ -147,19 +165,49 @@ pre, code {
   border: 0;
 }
 
-#thinwrap {
-  width: 600px;
-  margin: 30px auto;
+#sidebar {
+  width: 220px;
+  float: right;
+  margin: 0px 10px;
 }
 
-#thinwrap.center {
-  text-align: center;
+#sidebar h3 {
+  font-size: 16pt;
+}
+
+#tweets {
+  float: left;
+  width: 700px;
+  margin: 0px;
 }
 
 #wrapper {
   width: 960px;
   margin: 30px auto;
   overflow: auto;
+}
+
+#wrapper.thin, #wrapper.thincenter{
+  width: 620px;
+}
+
+#wrapper.thincenter {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+
+}
+
+.flickr {
+  width: 70px;
+  height: 70px;
 }
 
 
@@ -177,7 +225,7 @@ pre, code {
 #wiki-wrapper {
   margin: 0 auto;
   overflow: visible;
-  width: 80%;
+  width: 960px;
 }
 
 #wiki-wrapper.error {
@@ -191,6 +239,7 @@ pre, code {
 #wiki-content {
   height: 1%;
   overflow: visible;
+  margin: 0px 10px;
 }
 
 #wiki-content .wrap {

@@ -1,4 +1,4 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r).each { |dependency| require dependency }
+%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r flickraw).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
 
 if RUBY_PLATFORM.downcase.include?("linux")
@@ -26,6 +26,7 @@ DataMapper.auto_upgrade!
 class FieldNote < Sinatra::Base
 
   require_relative 'etc/config'
+  require_relative 'lib/twitTwat'
   use Rack::Session::Cookie
   set :static, true
   set :views, 'view'
@@ -35,6 +36,9 @@ class FieldNote < Sinatra::Base
   set :author, 'Fielding Johnston'
 
   use OmniAuth::Strategies::Twitter, settings.twitter_consumer_key, settings.twitter_consumer_secret
+
+  FlickRaw.api_key = settings.flickr_api_key
+  FlickRaw.shared_secret = settings.flickr_shared_secret
 
   logger = Log4r::Logger.new('auth')
   logger.outputters << Log4r::Outputter.stdout
@@ -145,7 +149,13 @@ class FieldNote < Sinatra::Base
 
   get '/blog' do
     logger.info("Somebody[#{request.ip}] attempted to access /blog. Perhaps you should finish it.")
-    "Hello there! I\'ve yet to implement the super sweet blog system. Check back later!"
+    # Twitter Feed
+    twitScrape = TwitTwat.new(settings.twitter_username)
+    twitScrape = twitScrape.getJson(5)
+    # Flickr Feed
+    flickrFeed = flickr.photos.search(:user_id => settings.flickr_id, :per_page => 6)
+
+    haml :blog, :locals => {:twitScrape => twitScrape, :flickrFeed => flickrFeed}
   end
   
   get '/notes' do                                                                # Super ugly, really need to refactor/reclear/rethink
