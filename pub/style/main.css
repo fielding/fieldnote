@@ -74,10 +74,41 @@ pre, code {
   float: left;
 }
 
+#about {
+  float: left;
+  width: 500px;
+}
+
+#about h3 {
+  font-size: 16pt;
+  line-height: 30px;
+}
+
+#about h3 em {
+  font-size: 24pt;
+  color: #666;
+}
+
+#aboutinfo {
+  float: right;
+  width: 400px;
+}
+
+#aboutinfo h3 {
+  font-size: 16pt;
+  line-height: 34px;
+}
+
 #crumbs {
 	margin: 12px 0 0;
 	padding: 10px 0 0;
 	border-bottom: 1px solid #CCC;
+}
+
+#footer {
+  margin: auto;
+  width: 960px;
+  text-align: center;
 }
 
 #head {
@@ -118,9 +149,18 @@ pre, code {
 
 #thinwrap {
   width: 600px;
-  margin: 0 auto;
+  margin: 30px auto;
 }
 
+#thinwrap.center {
+  text-align: center;
+}
+
+#wrapper {
+  width: 960px;
+  margin: 30px auto;
+  overflow: auto;
+}
 
 
 /* From githubs production gollum css highlighting section */

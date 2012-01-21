@@ -2,12 +2,12 @@
 %html
   %head= partial :_head
   %body
-    %div#thinwrap
-      %header= partial :_header
-      %content
+    %header= partial :_header
+    %content
+      %div#thinwrap
         %ul
           - @index.each do |n|
             %li
               %a(href="note/#{n.name}") #{n.name}
 
-      %footer= partial :_footer
+    %footer= partial :_footer

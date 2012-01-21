@@ -2,9 +2,9 @@
 %html
   %head= partial :_head
   %body
-    %div#thinwrap
-      %header= partial :_header
-      %content
+    %header= partial :_header
+    %content
+      %div#thinwrap
         %p 
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
           %i Nulla tincidunt nisi 
@@ -16,4 +16,4 @@
           e-mail:
           %a(href="mailto:fielding@justfielding.com")fielding@justfielding.com
 
-      %footer= partial :_footer
+    %footer= partial :_footer

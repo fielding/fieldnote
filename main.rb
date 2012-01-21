@@ -36,10 +36,10 @@ class FieldNote < Sinatra::Base
 
   use OmniAuth::Strategies::Twitter, settings.twitter_consumer_key, settings.twitter_consumer_secret
 
-  logger = Log4r::Logger.new('authlog')
+  logger = Log4r::Logger.new('auth')
   logger.outputters << Log4r::Outputter.stdout
-  logger.outputters << Log4r::FileOutputter.new('logtest', :filename => 'log/authlog.log')
-  logger.info('authlog: fieldnote initialized')
+  logger.outputters << Log4r::FileOutputter.new('auth', :filename => 'log/auth.log')
+  logger.info('fieldnote initialized')
 
   helpers do
     def current_user
@@ -51,7 +51,7 @@ class FieldNote < Sinatra::Base
     end
 
     def accessControl(fieldMatter)
-      logger = Log4r::Logger['authlog']
+      logger = Log4r::Logger['auth']
       if fieldMatter[:publish] == 'Read'
         logger.info("Unknown[#{request.ip} accessed #{fieldMatter[:title]}")
         return true
@@ -140,7 +140,7 @@ class FieldNote < Sinatra::Base
   
   get '/about' do
     logger.info("Somebody[#{request.ip}] attempted to access /about. Perhaps you should finish it.")
-    "Somebody was actually interested in reading the about section? Check back later!"
+    haml :about, :format => :html5
   end
 
   get '/blog' do
