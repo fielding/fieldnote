@@ -1,5 +1,61 @@
 @charset "UTF-8";
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* End Reset Template */
+
+/*@font-face{
+  font-family:'HelveticaNeueLt-Th-Thin';
+  src: url ( font/HelveticaNeueLt-Th.ttf ) format ("truetype")
+}*/
+
 body {
   background: #F2F2F2;
   font-size: 14pt;
@@ -17,6 +73,7 @@ i {
 a  {
   color: #333;
   font-weight: bold;
+  text-decoration: none;
 }
 
 em {
@@ -26,10 +83,11 @@ em {
 }
 
 h1 {
-  font-size: 22pt; 
-  color: #333; 
-  margin-bottom: -20px; 
-  padding-top: 20px;
+  color: #333;
+  font-size: 33px; /* was 32, GH is 33px */
+  line-height: normal;
+  padding: .08em 0 0 0;
+  margin: 0;
 }
 
 h2 {
@@ -38,10 +96,19 @@ h2 {
 }
 
 h3 {
-  font-size: 18pt;
+  font-size: 16pt;
   color: #333;
   font-weight: normal;
-  margin-bottom: -10px;
+}
+
+h4 {
+  font-size: 14pt;
+  color: #333;
+  font-weight: normal;
+}
+
+ol, ul {
+  margin: 10px auto;
 }
 
 p  {
@@ -79,11 +146,6 @@ pre, code {
   width: 540px;
 }
 
-#about h3 {
-  font-size: 16pt;
-  line-height: 30px;
-}
-
 #about h3 em {
   font-size: 24pt;
   color: #666;
@@ -96,8 +158,7 @@ pre, code {
 }
 
 #aboutinfo h3 {
-  font-size: 16pt;
-  line-height: 34px;
+  line-height: 24pt;
 }
 
 #crumbs {
@@ -106,22 +167,70 @@ pre, code {
 	border-bottom: 1px solid #CCC;
 }
 
+#flickr {
+}
+
 #footer {
   margin: 0px auto;
   width: 940px;
   text-align: center;
 }
 
-#flickr {
-  float: left;
-  width: 340px;
-  margin: 0px 10px;
-}
-
 #head {
 	width: 400px;
 	margin: 0 auto 20px;
 	padding-bottom: 20px;
+}
+
+#interwebs {
+  font-size: 11pt;
+  border: 1px dotted #999;
+  border-width: 0px 0px 1px 0px;
+}
+
+#interwebs ul {
+  list-style-type: none;
+  width: 220px;
+  margin: 10px auto 0px;
+}
+
+#interwebs li {
+  border: 1px dotted #999;
+  border-width: 0 0 1px 0;
+}
+
+#interwebs li a {
+  color: #333;
+  padding: 5px 0px 0px;
+  display: block;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+ * html #interwebs li a { /* make hover work in IE */
+   width: 400px;
+}
+
+#interwebs li a:hover {
+  background: #e4e4e4;
+}
+
+#interwebs em {
+  color: #9477c9;
+  display: inline-block;
+  font-size: 10pt;
+}
+
+#interwebs span {
+  color: #999;
+  font-size: 10pt;
+  display: block;
+  text-align:right;
+}
+
+#lastfm {
+  border: 1px dotted #999999;
+  border-width: 0px 0px 1px 0px;
 }
 
 #nav {
@@ -158,6 +267,10 @@ pre, code {
   font-size: 16pt;
 }
 
+#posts-container {
+  width: 620px;
+}
+
 #ribbon {
   position: absolute;
   top: 0;
@@ -173,12 +286,69 @@ pre, code {
 
 #sidebar h3 {
   font-size: 16pt;
+  line-height: 16pt;
+  border: 1px dotted #999;
+  border-width: 0px 0px 1px 0px;
+
+}
+
+#sidebar h3 i {
+  font-size: 22pt;
+  margin-left: -7px;
 }
 
 #tweets {
-  float: left;
-  width: 700px;
-  margin: 0px;
+  font-size: 11pt;
+  border: 1px dotted #999;
+  border-width: 0 0 1px 0;
+}
+
+#tweets ul {
+  list-style-type: none;
+  width: 220px;
+  margin: 10px auto 0px;
+}
+
+#tweets li {
+  border: 1px dotted #999;
+  border-width: 0 0 1px 0;
+}
+
+#tweets ul li:last-child, #interwebs ul li:last-child {
+  border-width: 0px;
+ /* padding-bottom: 10px;*/
+  margin-bottom: 0px;
+}
+
+#tweets li a {
+  color: #9477c9;
+  padding: 5px 0px 0px;
+  display: inline;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+ * html #tweets li a { /* make hover work in IE */
+   width: 400px;
+}
+
+#tweets li a:hover {
+  color: #333;
+}
+
+
+#tweets em {
+  color: #9477c9;
+  display: inline-block;
+ /* line-height: 125%*/
+}
+
+#tweets span {
+  color: #999;
+ /* line-height: 150%;*/
+  display: block;
+  text-align: right;
+  font-size: 10pt;
 }
 
 #wrapper {
@@ -193,6 +363,41 @@ pre, code {
 
 #wrapper.thincenter {
   text-align: center;
+}
+
+#lfText span {
+  margin-right:10px;
+  display: block;
+  font-size: 11pt;
+}
+
+#lfText span.artist {
+  color: #666;
+}
+
+#lfText span.title {
+  color: #333;
+}
+
+
+#lfAlbumArt{
+  width: 60px;
+  margin-right: 10px;
+  float: left;
+  height: 60px;
+}
+
+#lfText {
+  width: 140px;
+  margin-left: 10px;
+  Float: left;
+}
+
+
+.lfAlbumArt{
+  width: 60px;
+  height: 60px;
+  margin-right:10px;
 }
 
 .clear {
@@ -210,6 +415,25 @@ pre, code {
   height: 70px;
 }
 
+.sidebarSection, .sidebarSection2, .sidebarSection3 {
+  border: 1px solid #999999;
+  border-width: 0 0 1px 0;
+  text-align: right;
+  margin: 0px 0px 0px 0px;
+  line-height: 10pt
+}
+
+
+.sidebarSection2 {
+}
+
+.sidebarSection3 {
+}
+
+.thin li {
+  line-height: 33px;
+  font-size: 14pt;
+}
 
 /* From githubs production gollum css highlighting section */
 
@@ -262,7 +486,7 @@ pre, code {
 
 
 #template {
-  font-size: 14px;
+  font-size: 16pt;
   line-height: 1.4;
   margin-bottom: 40px;
 }
@@ -286,7 +510,7 @@ a.absent {
 /* Headings */
 #template h1, #template h2, #template h3, 
 #template h4, #template h5, #template h6 {
-  margin: 0;
+  margin: 0; 10px 0px 0px;
   padding: 0;
 }
 
@@ -410,7 +634,7 @@ a.absent {
 }
 
 #template table * tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: #f2f2f2;
 }
 
 #template table * tr th,
@@ -520,7 +744,7 @@ a.absent {
 
 /* Code */
 #template code, #template tt {
-  background-color: #f8f8f8;
+  background-color: #f2f2f2;
   border: 1px solid #dedede;
   font-size: 13px;
   padding: 0;
@@ -555,7 +779,7 @@ a.absent {
 
 }
 
-#template .highlight { background:#f8f8f8; padding-top: 10px; }
+#template .highlight { background:#f2f2f2; padding-top: 10px; }
 #template .highlight .c { color:#998;font-style:italic; }
 #template .highlight .err { color:#a61717;background-color:#e3d2d2; }
 #template .highlight .k { font-weight:bold; }

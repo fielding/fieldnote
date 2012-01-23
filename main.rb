@@ -1,4 +1,4 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r flickraw).each { |dependency| require dependency }
+%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r flickraw rockstar active_diigo twitter-text time-ago-in-words).each { |dependency| require dependency }
 #%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
 
 if RUBY_PLATFORM.downcase.include?("linux")
@@ -39,6 +39,10 @@ class FieldNote < Sinatra::Base
 
   FlickRaw.api_key = settings.flickr_api_key
   FlickRaw.shared_secret = settings.flickr_shared_secret
+
+  ActiveDiigo.api_key = settings.diigo_api_key
+  ActiveDiigo.username = settings.diigo_username
+  ActiveDiigo.password = settings.diigo_password
 
   logger = Log4r::Logger.new('auth')
   logger.outputters << Log4r::Outputter.stdout
@@ -154,8 +158,14 @@ class FieldNote < Sinatra::Base
     twitScrape = twitScrape.getJson(5)
     # Flickr Feed
     flickrFeed = flickr.photos.search(:user_id => settings.flickr_id, :per_page => 6)
+    # Scrobbler
+    Rockstar.lastfm = {:api_key => settings.lastfm_api_key, :api_secret => settings.lastfm_api_secret}
+    scrobble = Rockstar::User.new('justfielding')
+    playing = scrobble.recent_tracks[0]
+    # Diigo Interwebs
+    diigo = ActiveDiigo::Base.find('justfielding', :count => 6)
 
-    haml :blog, :locals => {:twitScrape => twitScrape, :flickrFeed => flickrFeed}
+    haml :blog, :locals => {:twitScrape => twitScrape, :flickrFeed => flickrFeed, :playing => playing, :diigo => diigo}
   end
   
   get '/notes' do                                                                # Super ugly, really need to refactor/reclear/rethink

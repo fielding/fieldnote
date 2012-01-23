@@ -6,26 +6,61 @@
     %content
       %div#wrapper
         %div#posts
-          %h3
-            %i Post Title Yeah buddy
-            %em @
-            Twitter | GitHub | Email
-          %p
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            %i Nulla tincidunt nisi 
-            ac turpis vulputate sit amet lacinia enim interdum. Donec ipsum purus, dapibus eu rhoncus vel, accumsan id nunc. In hac habitasse platea dictumst. Quisque nunc odio, euismod eget accumsan vel, tincidunt quis est. Nam at quam sed neque feugiat egestas tincidunt nec metus. Maecenas ornare, massa bibendum scelerisque ullamcorper, justo erat commodo mauris, at auctor dui sem sed sapien. Nullam placerat venenatis velit, eget vestibulum lorem bibendum a. Suspendisse fermentum risus a nunc consectetur id dapibus nibh placerat. Duis sapien ligula, posuere a iaculis nec, tristique sed velit. Sed vitae lorem a nibh mollis dapibus et eu felis. Curabitur porttitor, enim quis pharetra facilisis, tellus velit rhoncus dui, vel posuere sapien leo eu purus. Mauris vel magna metus. Aliquam commodo, arcu a accumsan porttitor, felis augue mollis massa, id fermentum dui quam nec lacus.
-          %div#tweets
-            %h3 Tweets
-            - locals[:twitScrape].each do |i|
-              %p
-                %i"
-                #{i['text']}
-                %i"
+          %div#posts-container
+            %h3
+              %i Post Title Yeah buddy!!!
+            %p
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              %i Nulla tincidunt nisi 
+              ac turpis vulputate sit amet lacinia enim interdum. Donec ipsum purus, dapibus eu rhoncus vel, accumsan id nunc. In hac habitasse platea dictumst. Quisque nunc odio, euismod eget accumsan vel, tincidunt quis est. Nam at quam sed neque feugiat egestas tincidunt nec metus. Maecenas ornare, massa bibendum scelerisque ullamcorper, justo erat commodo mauris, at auctor dui sem sed sapien. Nullam placerat venenatis velit, eget vestibulum lorem bibendum a. Suspendisse fermentum risus a nunc consectetur id dapibus nibh placerat. Duis sapien ligula, posuere a iaculis nec, tristique sed velit. Sed vitae lorem a nibh mollis dapibus et eu felis. Curabitur porttitor, enim quis pharetra facilisis, tellus velit rhoncus dui, vel posuere sapien leo eu purus. Mauris vel magna metus. Aliquam commodo, arcu a accumsan porttitor, felis augue mollis massa, id fermentum dui quam nec lacus.
+            %h3
+              %i Post Title Yeah buddy!!!
+            %p
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              %i Nulla tincidunt nisi 
+              ac turpis vulputate sit amet lacinia enim interdum. Donec ipsum purus, dapibus eu rhoncus vel, accumsan id nunc. In hac habitasse platea dictumst. Quisque nunc odio, euismod eget accumsan vel, tincidunt quis est. Nam at quam sed neque feugiat egestas tincidunt nec metus. Maecenas ornare, massa bibendum scelerisque ullamcorper, justo erat commodo mauris, at auctor dui sem sed sapien. Nullam placerat venenatis velit, eget vestibulum lorem bibendum a. Suspendisse fermentum risus a nunc consectetur id dapibus nibh placerat. Duis sapien ligula, posuere a iaculis nec, tristique sed velit. Sed vitae lorem a nibh mollis dapibus et eu felis. Curabitur porttitor, enim quis pharetra facilisis, tellus velit rhoncus dui, vel posuere sapien leo eu purus. Mauris vel magna metus. Aliquam commodo, arcu a accumsan porttitor, felis augue mollis massa, id fermentum dui quam nec lacus.
+            %h3
+              %i Post Title Yeah buddy!!!
+            %p
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              %i Nulla tincidunt nisi 
+              ac turpis vulputate sit amet lacinia enim interdum. Donec ipsum purus, dapibus eu rhoncus vel, accumsan id nunc. In hac habitasse platea dictumst. Quisque nunc odio, euismod eget accumsan vel, tincidunt quis est. Nam at quam sed neque feugiat egestas tincidunt nec metus. Maecenas ornare, massa bibendum scelerisque ullamcorper, justo erat commodo mauris, at auctor dui sem sed sapien. Nullam placerat venenatis velit, eget vestibulum lorem bibendum a. Suspendisse fermentum risus a nunc consectetur id dapibus nibh placerat. Duis sapien ligula, posuere a iaculis nec, tristique sed velit. Sed vitae lorem a nibh mollis dapibus et eu felis. Curabitur porttitor, enim quis pharetra facilisis, tellus velit rhoncus dui, vel posuere sapien leo eu purus. Mauris vel magna metus. Aliquam commodo, arcu a accumsan porttitor, felis augue mollis massa, id fermentum dui quam nec lacus.
         %div#sidebar
-          %h3 Flickr
-          %p
+          %h3 
+            Fielding
+            %i@
+          %h4.sidebarSection Last.fm
+          %div#lastfm
+            %div#lfAlbumArt
+              %img.lfAlbumArt(src="#{locals[:playing].images['medium']}")
+            %div#lfText
+              %span.artist #{locals[:playing].artist}
+              %span.title #{locals[:playing].name}
+            %div.clear
+          %h4.sidebarSection Twitter
+          %div#tweets
+            %ul
+              - locals[:twitScrape].each do |i|
+                %li 
+                  #{Twitter::Autolink.auto_link(i['text'])}
+                  %span 
+                    #{Time.parse(i['created_at']).ago_in_words}
+                    %em via #{i['source']}
+          %h4.sidebarSection2 Interwebs
+          %div#interwebs
+            %ul
+              - locals[:diigo].each do |d|
+                %li
+                  %a(href="#{d.url}")
+                    #{d.title}
+                    %span 
+                      #{Time.parse(d.created_at).ago_in_words}
+                      %em #{d.tags}
+
+          %h4.sidebarSection3 Flickr
+          %div#flickr
             - locals[:flickrFeed].each do |p|
               %img.flickr(src="#{FlickRaw.url_s(p)}")
-          %h3 Bookmarks
-          %p something else worth mentioning can go here
+          %div.clear
+        %div.clear
     %footer= partial :_footer
