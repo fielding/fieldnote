@@ -1,0 +1,6 @@
+.DS_Store
+.rbenv-version
+log/
+tmp/
+db/database.db
+etc/config.rb
