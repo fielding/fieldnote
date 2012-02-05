@@ -1,10 +1,4 @@
-%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r flickraw rockstar active_diigo twitter-text time-ago-in-words).each { |dependency| require dependency }
-#%w(rubygems dm-core dm-migrations dm-sqlite-adapter gollum haml sinatra sinatra/base).each { |dependency| require dependency }
-
-if RUBY_PLATFORM.downcase.include?("linux")
-  RubyPython.configure :python_exe => 'python2.7'
-end
-
+%w(dm-core dm-migrations dm-sqlite-adapter gollum haml maruku oa-oauth sinatra/base log4r flickraw rockstar active_diigo twitter-text time-ago-in-words fieldmatter).each { |dependency| require dependency }
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/db/database.db")
 
@@ -58,29 +52,29 @@ class FieldNote < Sinatra::Base
       haml page.to_sym, {layout:false}, variables
     end
 
-    def accessControl(fieldMatter)
+    def accessControl(frontMatter)
       logger = Log4r::Logger['auth']
-      if fieldMatter[:publish] == 'Read'
-        logger.info("Unknown[#{request.ip} accessed #{fieldMatter[:title]}")
+      if frontMatter[:publish] == 'Read'
+        logger.info("Unknown[#{request.ip} accessed #{frontMatter[:title]}")
         return true
       elsif current_user && current_user.id == 1
-        logger.info("#{current_user.name} accessed #{fieldMatter[:title]} as root user")
+        logger.info("#{current_user.name} accessed #{frontMatter[:title]} as root user")
         return true
-      elsif fieldMatter[:publish] != 'Read' && current_user
-        logger.warn("#{current_user.name} attempted to access #{fieldMatter[:title]}")
+      elsif frontMatter[:publish] != 'Read' && current_user
+        logger.warn("#{current_user.name} attempted to access #{frontMatter[:title]}")
         return false
       else
-        logger.warn("Unknown[#{request.ip}] tried to access #{fieldMatter[:title]}")
+        logger.warn("Unknown[#{request.ip}] tried to access #{frontMatter[:title]}")
         return false
       end
     end
 
-    def showcontent(name, fieldMatter={})
+    def showcontent(name, frontMatter={}, fieldmatter={})
       repo = Gollum::Wiki.new(settings.git_repo)
       object = repo.page(name)
       if content = object.formatted_data
         @editable = true
-          haml :note, :locals => {:fMatter => fieldMatter, :content => content}
+          haml :note, :locals => {:fMatter => frontMatter, :fieldmatter => fieldmatter, :content => content}
         end
     end
 
@@ -93,15 +87,22 @@ class FieldNote < Sinatra::Base
     partial :_navLogInOut, :locals => {:route => route, :display => display}
     end
 
-    def getMatter(object)
+    def getFrontMatter(object)
       repo = Gollum::Wiki.new(settings.git_repo)
       if object = repo.page(object)
         raw = object.raw_data
         markup = Gollum::Markup.new(object)
         markup.extract_code(raw)
-        fieldMatter = Maruku.new(raw).attributes
+        frontMatter = Maruku.new(raw).attributes
       end
     end
+
+    def getFieldMatter(object)
+      object = "#{object}.md"
+      id = Ohm.redis.smembers("FieldMatter::Note:filename:#{Base64::encode64(object).chomp}").pop
+      note = FieldMatter::Note[id]
+    end
+
   end
 
   get '/' do
@@ -192,9 +193,10 @@ class FieldNote < Sinatra::Base
   end
 
   get '/note/*' do                                                               # Mostly happy with this
-    fieldMatter = getMatter(params[:splat].first)
-    if accessControl(fieldMatter)
-      showcontent(params[:splat].first, fieldMatter)
+    frontMatter = getFrontMatter(params[:splat].first)
+    fieldmatter = getFieldMatter(params[:splat].first)
+    if accessControl(frontMatter)
+      showcontent(params[:splat].first, frontMatter, fieldmatter)
     else
       redirect '/noauth'
     end
